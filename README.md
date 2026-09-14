@@ -27,7 +27,7 @@ Repository ini berisi dokumentasi dan hasil praktikum mata kuliah Pemrograman Mo
 | Minggu | Topik Pembelajaran | Folder Tugas & Laporan | Status |
 |---|---|---|---|
 | **01** | Mobile Development Ecosystem & Flutter Refresh | `01-week-1-mobile-development-ecosystem-flutter-refresh` | ✅ |
-| **02** | Declarative UI & Responsive Design | `02-week-2-declarative-ui-responsive-design` | ⏳ |
+| **02** | Declarative UI & Responsive Design | `02-week-2-declarative-ui-responsive-design` | ✅ |
 | **03** | Navigation & State Management | `03-week-3-navigation-state-management` | ⏳ |
 | **04** | Networking & REST API Integration | `04-week-4-networking-rest-api` | ⏳ |
 | **05** | Local Storage & Offline-First Architecture | `05-week-5-local-storage-offline-first` | ⏳ |
