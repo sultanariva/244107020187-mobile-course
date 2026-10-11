@@ -29,9 +29,9 @@ Repository ini berisi dokumentasi dan hasil praktikum mata kuliah Pemrograman Mo
 | **01** | Mobile Development Ecosystem & Flutter Refresh | `01-week-1-mobile-development-ecosystem-flutter-refresh` | ✅ |
 | **02** | Declarative UI & Responsive Design | `02-week-2-declarative-ui-responsive-design` | ✅ |
 | **03** | Navigation & State Management | `03-week-3-navigation-state-management` | ✅ |
-| **04** | Networking & REST API Integration | `04-week-4-networking-rest-api` | ⏳ |
-| **05** | Local Storage & Offline-First Architecture | `05-week-5-local-storage-offline-first` | ⏳ |
-| **06** | Authentication, Security & Push Notifications | `06-week-6-authentication-security-fcm` | ⏳ |
+| **04** | Networking & REST API Integration | `04-week-4-networking-rest-api` | ✅ |
+| **05** | Local Storage & Offline-First Architecture | `05-week-5-local-storage-offline-first` | ✅ |
+| **06** | Authentication, Security & Push Notifications | `06-week-6-authentication-security-fcm` | ✅ |
 | **07** | Clean Architecture in Flutter | `07-week-7-clean-architecture` | ⏳ |
 | **08** | Mid-Project Review & Architecture Assessment | `08-week-8-mid-project-review` | ⏳ |
 | **09** | AI-Assisted Mobile Development | `09-week-9-ai-assisted-development` | ⏳ |
