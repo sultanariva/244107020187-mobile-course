@@ -30,29 +30,17 @@ class ForceOfflineNotifier extends Notifier<bool> {
   void set(bool value) => state = value;
 }
 
-final postsProvider = FutureProvider<List<Post>>((ref) {
-  return loadPostsCacheFirst(ref);
-});
-
-/// Alur cache-first: kembalikan cache lokal seketika, lalu refresh background
-/// hanya saat cache kosong (agar tidak memicu loop invalidasi). Refresh manual
-/// dipicu lewat pull-to-refresh / tombol Sync.
-Future<List<Post>> loadPostsCacheFirst(Ref ref) async {
+/// Isi cache lokal (cache-first).
+///
+/// Refresh jaringan **tidak** dijalankan dari dalam provider ini. Versi
+/// sebelumnya memanggil `ref.invalidate(postsProvider)` dari provider yang sama,
+/// sehingga Riverpod melempar "A provider cannot depend on itself" dan `Ref`
+/// provider sudah dibuang saat refresh selesai. Refresh kini dipicu dari
+/// `PostsPage`, tempat `Ref` milik widget tetap valid.
+final postsProvider = FutureProvider<List<Post>>((ref) async {
   final result = await ref.watch(postRepositoryProvider).fetchCachedPosts();
-  final cached = result.failure != null ? const <Post>[] : result.posts;
-  if (cached.isEmpty) {
-    refreshPostsInBackground(ref);
-  }
-  return cached;
-}
-
-/// Refresh background: hormati forceOffline, simpan hasil, invalidate provider.
-void refreshPostsInBackground(Ref ref) {
-  if (ref.read(forceOfflineProvider)) return;
-  Future(() async {
-    final result = await ref.read(refreshPostsProvider).call();
-    if (result.ok) {
-      ref.invalidate(postsProvider);
-    }
-  });
-}
+  // Kegagalan baca cache diperlakukan sebagai cache kosong; UI menawarkan
+  // tombol muat ulang alih-alih layar error.
+  if (result.failure != null) return const <Post>[];
+  return result.posts;
+});
