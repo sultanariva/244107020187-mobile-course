@@ -13,10 +13,10 @@ class PostModel extends Post {
   Map<String, dynamic> toJson() => {'id': id, 'title': title, 'body': body};
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
-        id: (json['id'] as num).toInt(),
-        title: json['title'] as String? ?? '',
-        body: json['body'] as String? ?? '',
-      );
+    id: (json['id'] as num).toInt(),
+    title: json['title'] as String? ?? '',
+    body: json['body'] as String? ?? '',
+  );
 
   /// Membaca daftar post dari payload JSON yang tersimpan di cache.
   static List<Post> listFromPayload(String payload) {
@@ -30,11 +30,9 @@ class PostModel extends Post {
   static String listToPayload(List<Post> posts) {
     return jsonEncode(
       posts
-          .map((p) => PostModel(
-                id: p.id,
-                title: p.title,
-                body: p.body,
-              ).toJson())
+          .map(
+            (p) => PostModel(id: p.id, title: p.title, body: p.body).toJson(),
+          )
           .toList(),
     );
   }

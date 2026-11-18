@@ -37,20 +37,14 @@ final notesProvider = FutureProvider<List<Note>>(
   retry: (retryCount, error) => null,
 );
 
-final dirtyCountProvider = FutureProvider<int>(
-  (ref) async {
-    final result = await ref.watch(noteRepositoryProvider).countDirty();
-    if (result.failure != null) throw Exception(result.failure!.message);
-    return result.count;
-  },
-  retry: (retryCount, error) => null,
-);
+final dirtyCountProvider = FutureProvider<int>((ref) async {
+  final result = await ref.watch(noteRepositoryProvider).countDirty();
+  if (result.failure != null) throw Exception(result.failure!.message);
+  return result.count;
+}, retry: (retryCount, error) => null);
 
-final noteDetailProvider = FutureProvider.family<Note?, int>(
-  (ref, id) async {
-    final result = await ref.watch(noteRepositoryProvider).fetchNoteById(id);
-    if (result.failure != null) throw Exception(result.failure!.message);
-    return result.note;
-  },
-  retry: (retryCount, error) => null,
-);
+final noteDetailProvider = FutureProvider.family<Note?, int>((ref, id) async {
+  final result = await ref.watch(noteRepositoryProvider).fetchNoteById(id);
+  if (result.failure != null) throw Exception(result.failure!.message);
+  return result.note;
+}, retry: (retryCount, error) => null);

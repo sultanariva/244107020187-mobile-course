@@ -33,9 +33,8 @@ class NotesPage extends ConsumerWidget {
           .read(noteRepositoryProvider)
           .addNote(title: title.trim());
       if (result.failure != null && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result.failure!.message)),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.failure!.message)));
       }
       ref.invalidate(notesProvider);
       ref.invalidate(dirtyCountProvider);

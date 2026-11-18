@@ -61,15 +61,11 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final db = await _openDb();
       await db.delete('cached_posts');
-      await db.insert(
-        'cached_posts',
-        {
-          'id': 1,
-          'payload': PostModel.listToPayload(posts),
-          'cached_at': DateTime.now().toIso8601String(),
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+      await db.insert('cached_posts', {
+        'id': 1,
+        'payload': PostModel.listToPayload(posts),
+        'cached_at': DateTime.now().toIso8601String(),
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
       return (ok: true, failure: null);
     } catch (e) {
       return (

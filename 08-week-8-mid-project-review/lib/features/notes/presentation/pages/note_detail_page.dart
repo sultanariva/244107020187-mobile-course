@@ -27,8 +27,10 @@ class NoteDetailPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(note.title,
-                    style: Theme.of(context).textTheme.headlineSmall),
+                Text(
+                  note.title,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
                 const SizedBox(height: 8),
                 Text('Diperbarui: ${formatUpdatedAt(note.updatedAt)}'),
                 const SizedBox(height: 8),

@@ -19,8 +19,9 @@ final refreshPostsProvider = Provider<RefreshPosts>((ref) {
 });
 
 /// Toggle simulasi offline deterministik: true = anggap tidak ada koneksi.
-final forceOfflineProvider =
-    NotifierProvider<ForceOfflineNotifier, bool>(ForceOfflineNotifier.new);
+final forceOfflineProvider = NotifierProvider<ForceOfflineNotifier, bool>(
+  ForceOfflineNotifier.new,
+);
 
 class ForceOfflineNotifier extends Notifier<bool> {
   @override

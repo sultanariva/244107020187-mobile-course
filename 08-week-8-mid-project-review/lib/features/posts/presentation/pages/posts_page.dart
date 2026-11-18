@@ -21,8 +21,7 @@ class PostsPage extends ConsumerWidget {
           Text(forceOffline ? 'Offline' : 'Online'),
           Switch(
             value: forceOffline,
-            onChanged: (v) =>
-                ref.read(forceOfflineProvider.notifier).set(v),
+            onChanged: (v) => ref.read(forceOfflineProvider.notifier).set(v),
           ),
         ],
       ),
@@ -44,7 +43,8 @@ class PostsPage extends ConsumerWidget {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Offline: sync ditunda')),
+                            content: Text('Offline: sync ditunda'),
+                          ),
                         );
                       }
                       return;
@@ -55,9 +55,11 @@ class PostsPage extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(result.failure != null
-                              ? result.failure!.message
-                              : 'Tersinkron: ${result.synced} catatan'),
+                          content: Text(
+                            result.failure != null
+                                ? result.failure!.message
+                                : 'Tersinkron: ${result.synced} catatan',
+                          ),
                         ),
                       );
                     }
@@ -80,17 +82,24 @@ class PostsPage extends ConsumerWidget {
                   : RefreshIndicator(
                       onRefresh: () async {
                         if (ref.read(forceOfflineProvider)) return;
-                        final result =
-                            await ref.read(refreshPostsProvider).call();
+                        final result = await ref
+                            .read(refreshPostsProvider)
+                            .call();
                         if (result.ok) ref.invalidate(postsProvider);
                       },
                       child: ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (context, i) => ListTile(
-                          title: Text(items[i].title,
-                              maxLines: 1, overflow: TextOverflow.ellipsis),
-                          subtitle: Text(items[i].body,
-                              maxLines: 2, overflow: TextOverflow.ellipsis),
+                          title: Text(
+                            items[i].title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            items[i].body,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ),

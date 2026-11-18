@@ -87,9 +87,9 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         noteRepositoryProvider.overrideWithValue(
-          FakeNoteRepository(items: [
-            Note(title: 'Tes', updatedAt: DateTime.now()),
-          ]),
+          FakeNoteRepository(
+            items: [Note(title: 'Tes', updatedAt: DateTime.now())],
+          ),
         ),
       ],
     );

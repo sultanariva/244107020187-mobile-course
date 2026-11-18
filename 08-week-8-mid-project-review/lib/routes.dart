@@ -45,7 +45,10 @@ class _HomeShellState extends State<HomeShell> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.notes), label: 'Catatan'),
           NavigationDestination(icon: Icon(Icons.article), label: 'Posts'),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Pengaturan'),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Pengaturan',
+          ),
         ],
       ),
     );
