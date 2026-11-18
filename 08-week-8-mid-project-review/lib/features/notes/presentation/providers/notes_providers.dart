@@ -4,6 +4,7 @@ import '../../data/local/database.dart';
 import '../../data/repositories/note_repository_impl.dart';
 import '../../domain/entities/note.dart';
 import '../../domain/repositories/note_repository.dart';
+import '../../domain/usecases/add_note.dart';
 import '../../domain/usecases/get_notes.dart';
 import '../../domain/usecases/sync_notes.dart';
 
@@ -23,6 +24,10 @@ final getNotesProvider = Provider<GetNotes>((ref) {
 
 final syncNotesProvider = Provider<SyncNotes>((ref) {
   return SyncNotes(ref.watch(noteRepositoryProvider));
+});
+
+final addNoteProvider = Provider<AddNote>((ref) {
+  return AddNote(ref.watch(noteRepositoryProvider));
 });
 
 // Presentation layer: state untuk UI.

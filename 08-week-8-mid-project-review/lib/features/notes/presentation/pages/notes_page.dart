@@ -28,17 +28,19 @@ class NotesPage extends ConsumerWidget {
         ],
       ),
     );
-    if (title != null && title.trim().isNotEmpty) {
-      final result = await ref
-          .read(noteRepositoryProvider)
-          .addNote(title: title.trim());
-      if (result.failure != null && context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(result.failure!.message)));
-      }
-      ref.invalidate(notesProvider);
-      ref.invalidate(dirtyCountProvider);
+    // `null` berarti dialog dibatalkan; string kosong tetap dikirim ke use case
+    // agar pengguna menerima pesan error, bukan tombol yang diam saja.
+    if (title == null) return;
+
+    final result = await ref.read(addNoteProvider).call(title: title);
+    if (!context.mounted) return;
+    if (result.failure != null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.failure!.message)));
+      return;
     }
+    ref.invalidate(notesProvider);
+    ref.invalidate(dirtyCountProvider);
   }
 
   @override
