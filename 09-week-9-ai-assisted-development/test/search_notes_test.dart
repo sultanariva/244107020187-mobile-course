@@ -37,6 +37,32 @@ void main() {
     expect(search(_notes(), 'zzz-tak-ada'), isEmpty);
   });
 
+  test(
+    'error notesProvider diteruskan, bukan berubah jadi daftar kosong',
+    () async {
+      final container = ProviderContainer(
+        overrides: [
+          notesProvider.overrideWith(
+            (ref) => Future<List<Note>>.error(const FormatException('db mati')),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Riverpod 3 membuang provider tanpa listener, jadi dijaga hidup.
+      final sub = container.listen(visibleNotesProvider, (_, _) {});
+      addTearDown(sub.close);
+
+      final notesError = container.read(notesProvider.future);
+      await expectLater(notesError, throwsA(isA<FormatException>()));
+      await Future<void>.delayed(Duration.zero);
+
+      final state = container.read(visibleNotesProvider);
+      expect(state.hasError, isTrue);
+      expect(state.hasValue, isFalse);
+    },
+  );
+
   testWidgets('empty state membedakan "belum ada catatan" dan "tidak cocok"', (
     tester,
   ) async {
