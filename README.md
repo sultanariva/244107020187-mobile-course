@@ -34,7 +34,7 @@ Repository ini berisi dokumentasi dan hasil praktikum mata kuliah Pemrograman Mo
 | **06** | Authentication, Security & Push Notifications | `06-week-6-authentication-security-fcm` | ✅ |
 | **07** | Clean Architecture in Flutter | `07-week-7-clean-architecture` | ✅ |
 | **08** | Mid-Project Review & Architecture Assessment | `08-week-8-mid-project-review` | ✅ |
-| **09** | AI-Assisted Mobile Development | `09-week-9-ai-assisted-development` | ⏳ |
+| **09** | AI-Assisted Mobile Development | `09-week-9-ai-assisted-development` | ✅ |
 | **10** | AI Feature Integration | `10-week-10-ai-feature-integration` | ⏳ |
 | **11** | Performance Optimization & Profiling | `11-week-11-performance-optimization` | ⏳ |
 | **12** | Testing & Quality Assurance | `12-week-12-testing-quality-assurance` | ⏳ |
