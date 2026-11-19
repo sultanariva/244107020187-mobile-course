@@ -45,12 +45,29 @@ class NotesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notes = ref.watch(notesProvider);
+    final notes = ref.watch(visibleNotesProvider);
+    final query = ref.watch(noteSearchQueryProvider);
     final dirtyCount = ref.watch(dirtyCountProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catatan Offline'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+            child: TextField(
+              onChanged: (value) =>
+                  ref.read(noteSearchQueryProvider.notifier).set(value),
+              decoration: const InputDecoration(
+                hintText: 'Cari judul catatan',
+                prefixIcon: Icon(Icons.search),
+                isDense: true,
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+        ),
         actions: [
           dirtyCount.maybeWhen(
             data: (count) => count > 0
@@ -70,7 +87,17 @@ class NotesPage extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (items) => items.isEmpty
-            ? const Center(child: Text('Belum ada catatan'))
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    query.trim().isEmpty
+                        ? 'Belum ada catatan'
+                        : 'Tidak ada catatan dengan judul "$query"',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
             : ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, i) {
