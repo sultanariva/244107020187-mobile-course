@@ -40,7 +40,7 @@ class AskAssistant {
         : history;
 
     final messages = <ChatMessage>[
-      const ChatMessage(role: ChatRole.user, content: systemPrompt),
+      const ChatMessage.system(systemPrompt),
       ...trimmedHistory,
       ChatMessage.user(cleanQuestion),
     ];

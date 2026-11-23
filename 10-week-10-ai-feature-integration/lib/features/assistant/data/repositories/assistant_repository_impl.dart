@@ -51,10 +51,7 @@ class AssistantRepositoryImpl implements AssistantRepository {
           'stream': true,
           'messages': [
             for (final message in messages)
-              {
-                'role': message.isUser ? 'user' : 'assistant',
-                'content': message.content,
-              },
+              {'role': message.roleName, 'content': message.content},
           ],
         },
         options: Options(

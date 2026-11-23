@@ -44,10 +44,17 @@ void main() {
 
       final messages = repository.lastMessages!;
       expect(messages.first.content, AskAssistant.systemPrompt);
+      expect(messages.first.roleName, 'system');
       expect(messages.last.content, 'Apa isi catatanku?');
       expect(messages.last.isUser, isTrue);
     },
   );
+
+  test('nama peran mengikuti kontrak payload API', () {
+    expect(const ChatMessage.system('x').roleName, 'system');
+    expect(const ChatMessage.user('x').roleName, 'user');
+    expect(const ChatMessage.assistant('x').roleName, 'assistant');
+  });
 
   test('riwayat dipotong maksimal AskAssistant.maxHistory pesan', () async {
     final repository = FakeAssistantRepository();
