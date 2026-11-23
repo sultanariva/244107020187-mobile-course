@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/failures.dart';
@@ -15,7 +14,7 @@ final aiConfigRepositoryProvider = Provider<AiConfigRepository>((ref) {
 });
 
 final assistantRepositoryProvider = Provider<AssistantRepository>((ref) {
-  return AssistantRepositoryImpl(Dio(), ref.watch(aiConfigRepositoryProvider));
+  return AssistantRepositoryImpl(config: ref.watch(aiConfigRepositoryProvider));
 });
 
 final askAssistantProvider = Provider<AskAssistant>((ref) {
