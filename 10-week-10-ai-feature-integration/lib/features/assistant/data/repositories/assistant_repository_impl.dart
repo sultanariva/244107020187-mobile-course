@@ -14,11 +14,12 @@ import '../sse_parser.dart';
 /// Kegagalan diubah menjadi [Failure] yang ramah pengguna, sesuai kontrak
 /// domain: presentation tidak menerima `DioException` mentah.
 class AssistantRepositoryImpl implements AssistantRepository {
-  AssistantRepositoryImpl(this._dio, this._config, {SseParser? parser})
-    : _parser = parser ?? const SseParser();
+  AssistantRepositoryImpl({required this.config, Dio? dio, SseParser? parser})
+    : _dio = dio ?? Dio(),
+      _parser = parser ?? const SseParser();
 
   final Dio _dio;
-  final AiConfigRepository _config;
+  final AiConfigRepository config;
   final SseParser _parser;
 
   /// Endpoint bawaan. Bisa diganti lewat Pengaturan (mis. server lokal
@@ -32,14 +33,14 @@ class AssistantRepositoryImpl implements AssistantRepository {
 
   @override
   Stream<String> streamAnswer(List<ChatMessage> messages) async* {
-    final apiKey = (await _config.readApiKey())?.trim() ?? '';
+    final apiKey = (await config.readApiKey())?.trim() ?? '';
     if (apiKey.isEmpty) {
       throw const ConfigurationFailure(
         'API key belum diatur. Buka Pengaturan lalu simpan API key provider.',
       );
     }
 
-    final savedBaseUrl = (await _config.readBaseUrl())?.trim() ?? '';
+    final savedBaseUrl = (await config.readBaseUrl())?.trim() ?? '';
     final baseUrl = savedBaseUrl.isEmpty ? defaultBaseUrl : savedBaseUrl;
 
     final Response<ResponseBody> response;
