@@ -22,3 +22,8 @@ class NetworkFailure extends Failure {
 class ValidationFailure extends Failure {
   const ValidationFailure(super.message);
 }
+
+/// Kegagalan konfigurasi aplikasi (mis. API key belum diatur pengguna).
+class ConfigurationFailure extends Failure {
+  const ConfigurationFailure(super.message);
+}

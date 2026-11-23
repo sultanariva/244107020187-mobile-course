@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'features/assistant/presentation/pages/assistant_page.dart';
 import 'features/notes/presentation/pages/note_detail_page.dart';
 import 'features/notes/presentation/pages/notes_page.dart';
 import 'features/posts/presentation/pages/posts_page.dart';
@@ -37,7 +38,12 @@ class _HomeShellState extends State<HomeShell> {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: const [NotesPage(), PostsPage(), SettingsPage()],
+        children: const [
+          NotesPage(),
+          PostsPage(),
+          AssistantPage(),
+          SettingsPage(),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
@@ -45,6 +51,7 @@ class _HomeShellState extends State<HomeShell> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.notes), label: 'Catatan'),
           NavigationDestination(icon: Icon(Icons.article), label: 'Posts'),
+          NavigationDestination(icon: Icon(Icons.smart_toy), label: 'Asisten'),
           NavigationDestination(
             icon: Icon(Icons.settings),
             label: 'Pengaturan',
