@@ -28,10 +28,14 @@ jobs:
       - name: Ambil source code
         uses: actions/checkout@v4
 
-      - name: Siapkan Flutter (stable + cache pub)
+      - name: Siapkan Flutter (versi dipin + cache pub)
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          # Dipin ke versi yang sama dengan mesin pengembang. Flutter 3.50
+          # menandai `package:flutter/material.dart` sebagai deprecated
+          # (arahnya ke package:material_ui), sehingga `--fatal-infos` gagal
+          # walau kode belum berubah. Migrasinya dicatat sebagai risiko R6.
+          flutter-version: 3.47.7
           cache: true
 
       - name: Catat versi toolchain
