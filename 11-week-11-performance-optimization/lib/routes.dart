@@ -36,15 +36,15 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _index,
-        children: const [
-          NotesPage(),
-          PostsPage(),
-          AssistantPage(),
-          SettingsPage(),
-        ],
-      ),
+      // Hanya tab aktif yang dibangun (optimasi Minggu 11). Konsekuensinya
+      // posisi scroll tiap tab direset saat berpindah; state yang penting
+      // (kata kunci cari, riwayat chat) disimpan di provider, bukan di widget.
+      body: switch (_index) {
+        0 => const NotesPage(),
+        1 => const PostsPage(),
+        2 => const AssistantPage(),
+        _ => const SettingsPage(),
+      },
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (i) => setState(() => _index = i),

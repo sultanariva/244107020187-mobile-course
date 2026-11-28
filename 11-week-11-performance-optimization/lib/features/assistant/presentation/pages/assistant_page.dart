@@ -38,10 +38,19 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
 
   @override
   Widget build(BuildContext context) {
-    final chat = ref.watch(chatProvider);
+    // select: perubahan streamingText tidak me-rebuild seluruh halaman.
+    final chat = ref.watch(
+      chatProvider.select(
+        (s) =>
+            (messages: s.messages, isStreaming: s.isStreaming, error: s.error),
+      ),
+    );
     final configOk = ref.watch(aiConfigStatusProvider);
 
-    ref.listen(chatProvider, (_, _) => _scrollToBottom());
+    // Gulir hanya saat ada pesan baru, bukan setiap potongan streaming.
+    ref.listen(chatProvider.select((s) => s.messages.length), (_, _) {
+      _scrollToBottom();
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -65,18 +74,17 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
           Expanded(
             child: chat.messages.isEmpty && !chat.isStreaming
                 ? const _EmptyState()
-                : ListView(
+                : ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.all(12),
-                    children: [
-                      for (final message in chat.messages)
-                        _Bubble(message: message),
-                      if (chat.isStreaming)
-                        _Bubble(
-                          message: ChatMessage.assistant(chat.streamingText),
-                          isStreaming: true,
-                        ),
-                    ],
+                    itemCount:
+                        chat.messages.length + (chat.isStreaming ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index < chat.messages.length) {
+                        return _Bubble(message: chat.messages[index]);
+                      }
+                      return const _StreamingBubble();
+                    },
                   ),
           ),
           if (chat.error != null)
@@ -95,6 +103,18 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
         ],
       ),
     );
+  }
+}
+
+/// Bubble jawaban yang sedang mengalir. Consumer terpisah supaya tiap potongan
+/// hanya me-rebuild bubble ini, bukan seluruh halaman.
+class _StreamingBubble extends ConsumerWidget {
+  const _StreamingBubble();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final text = ref.watch(chatProvider.select((s) => s.streamingText));
+    return _Bubble(message: ChatMessage.assistant(text), isStreaming: true);
   }
 }
 
