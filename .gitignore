@@ -9,3 +9,6 @@
 **/.idea/
 **/*.iml
 **/.DS_Store
+
+# Hasil pengukuran lokal
+**/coverage/
