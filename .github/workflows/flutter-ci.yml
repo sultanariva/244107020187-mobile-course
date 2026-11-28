@@ -1,0 +1,75 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: 13-week-13-ci-cd-automation
+
+jobs:
+  test-and-build:
+    name: Format, analisis, test, dan build Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Ambil source code
+        uses: actions/checkout@v4
+
+      - name: Siapkan Flutter (stable + cache pub)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Catat versi toolchain
+        run: |
+          flutter --version
+          java -version
+
+      - name: Ambil dependensi
+        run: flutter pub get
+
+      - name: Format (gagal bila ada berkas berubah)
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analisis statis
+        run: flutter analyze --fatal-infos
+
+      - name: Test + coverage
+        run: flutter test --coverage
+
+      - name: Ringkasan coverage
+        if: always()
+        run: |
+          if [ -f coverage/lcov.info ]; then
+            awk -F: '/^LF:/{lf+=$2} /^LH:/{lh+=$2} END{if (lf > 0) printf "### Coverage: %d/%d baris (%.1f%%)\n", lh, lf, lh*100/lf}' coverage/lcov.info >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Build APK release
+        run: flutter build apk --release
+
+      - name: Build AAB release
+        run: flutter build appbundle --release
+
+      - name: Unggah artefak Android
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-builds
+          path: |
+            13-week-13-ci-cd-automation/build/app/outputs/flutter-apk/app-release.apk
+            13-week-13-ci-cd-automation/build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 7
