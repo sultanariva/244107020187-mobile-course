@@ -1,0 +1,10 @@
+{
+  "label": "before",
+  "frames": 132,
+  "avg_ms": 13.16,
+  "p90_ms": 25.0,
+  "p99_ms": 33.92,
+  "max_ms": 72.08,
+  "jank_frames": 29,
+  "jank_pct": 22.0
+}

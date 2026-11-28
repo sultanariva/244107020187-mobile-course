@@ -36,7 +36,7 @@ Repository ini berisi dokumentasi dan hasil praktikum mata kuliah Pemrograman Mo
 | **08** | Mid-Project Review & Architecture Assessment | `08-week-8-mid-project-review` | ✅ |
 | **09** | AI-Assisted Mobile Development | `09-week-9-ai-assisted-development` | ✅ |
 | **10** | AI Feature Integration | `10-week-10-ai-feature-integration` | ✅ |
-| **11** | Performance Optimization & Profiling | `11-week-11-performance-optimization` | ⏳ |
+| **11** | Performance Optimization & Profiling | `11-week-11-performance-optimization` | ✅ |
 | **12** | Testing & Quality Assurance | `12-week-12-testing-quality-assurance` | ⏳ |
 | **13** | CI/CD Automation with GitHub Actions | `13-week-13-ci-cd-automation` | ⏳ |
 | **14** | Deployment & Production Monitoring | `14-week-14-deployment-monitoring` | ⏳ |

@@ -1,0 +1,10 @@
+{
+  "label": "after50",
+  "frames": 144,
+  "avg_ms": 11.22,
+  "p90_ms": 20.46,
+  "p99_ms": 48.45,
+  "max_ms": 65.09,
+  "jank_frames": 25,
+  "jank_pct": 17.4
+}
